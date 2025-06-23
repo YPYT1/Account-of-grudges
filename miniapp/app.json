@@ -1,8 +1,10 @@
 {
   "pages": [
+    "pages/auth/index",
     "pages/index/index",
+    "pages/couple/index",
     "pages/mood/mood",
-    "pages/sweet/sweet", 
+    "pages/sweet/sweet",
     "pages/profile/profile"
   ],
   "window": {

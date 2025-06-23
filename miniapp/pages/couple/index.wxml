@@ -1,0 +1,126 @@
+<!-- 恋心物语 - 情侣绑定页面 -->
+<view class="couple-container">
+  
+  <!-- 头部区域 -->
+  <view class="header">
+    <view class="title">绑定你的另一半</view>
+    <view class="subtitle">开启甜蜜的记录之旅</view>
+    <view class="help-btn" bind:tap="showHelp">❓ 绑定帮助</view>
+  </view>
+
+  <!-- 标签页切换 -->
+  <view class="tab-bar">
+    <view 
+      class="tab-item {{currentTab === 'create' ? 'active' : ''}}"
+      data-tab="create"
+      bind:tap="switchTab"
+    >
+      创建邀请
+    </view>
+    <view 
+      class="tab-item {{currentTab === 'join' ? 'active' : ''}}"
+      data-tab="join"
+      bind:tap="switchTab"
+    >
+      加入情侣
+    </view>
+  </view>
+
+  <!-- 内容区域 -->
+  <view class="content">
+    
+    <!-- 创建邀请标签页 -->
+    <view wx:if="{{currentTab === 'create'}}" class="tab-content">
+      
+      <view class="create-section">
+        <view class="section-title">生成邀请码</view>
+        <view class="section-desc">生成专属邀请码，分享给你的另一半</view>
+        
+        <!-- 邀请码显示 -->
+        <view wx:if="{{inviteCode}}" class="invite-code-display">
+          <view class="code-label">邀请码</view>
+          <view class="code-value">{{inviteCode}}</view>
+          <view class="code-expire">有效期至：{{inviteExpireTime}}</view>
+          
+          <view class="code-actions">
+            <button class="action-btn copy-btn" bind:tap="copyInviteCode">
+              📋 复制邀请码
+            </button>
+            <button class="action-btn share-btn" bind:tap="shareInviteCode">
+              📤 分享给TA
+            </button>
+          </view>
+        </view>
+
+        <!-- 生成按钮 -->
+        <view wx:else class="generate-section">
+          <view class="generate-tip">
+            <view class="tip-icon">💡</view>
+            <view class="tip-text">点击下方按钮生成邀请码，然后分享给你的另一半</view>
+          </view>
+          
+          <button 
+            class="generate-btn primary-btn"
+            loading="{{userLoading || isLoading}}"
+            disabled="{{userLoading || isLoading}}"
+            bind:tap="handleCreateInvitation"
+          >
+            🎯 生成邀请码
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 加入情侣标签页 -->
+    <view wx:if="{{currentTab === 'join'}}" class="tab-content">
+      
+      <view class="join-section">
+        <view class="section-title">输入邀请码</view>
+        <view class="section-desc">输入对方分享的邀请码完成绑定</view>
+        
+        <!-- 邀请码输入 -->
+        <view class="input-section">
+          <view class="input-label">邀请码</view>
+          <input 
+            class="invite-input"
+            type="text"
+            placeholder="请输入6位邀请码"
+            value="{{inputInviteCode}}"
+            maxlength="6"
+            bind:input="onInviteCodeInput"
+          />
+          <view class="input-tip">邀请码为6位字母和数字组合</view>
+        </view>
+
+        <!-- 加入按钮 -->
+        <button 
+          class="join-btn primary-btn"
+          loading="{{userLoading || isLoading}}"
+          disabled="{{userLoading || isLoading || !inputInviteCode}}"
+          bind:tap="handleJoinCouple"
+        >
+          💕 加入情侣关系
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 错误提示 -->
+  <view wx:if="{{error}}" class="error-tip">
+    <view class="error-icon">⚠️</view>
+    <view class="error-text">{{error}}</view>
+  </view>
+
+  <!-- 底部说明 -->
+  <view class="footer">
+    <view class="footer-text">
+      绑定后你们将共享一个甜蜜空间，可以记录日常的小摩擦和甜蜜时刻
+    </view>
+    <view class="footer-features">
+      <view class="feature">📝 记录日常</view>
+      <view class="feature">💕 分享甜蜜</view>
+      <view class="feature">📊 情感分析</view>
+    </view>
+  </view>
+
+</view>

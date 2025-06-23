@@ -1,6 +1,55 @@
+# === macOS系统垃圾文件 ===
 .DS_Store
+
+# === IntelliJ IDEA / WebStorm / VSCode 项目配置 ===
 .idea/
+*.iml
+.vscode/
+
+# === Java / Maven / Spring Boot ===
+*.class
+*.jar
+*.war
+*.ear
+target/
+bin/
+logs/
+*.log
+*.tmp
+*.swp
+*.bak
+
+# === Maven wrapper ===
+.mvn/
+!**/mvnw
+!**/mvnw.cmd
+
+# === 微信小程序 ===
+# 小程序编译输出（如使用微信开发者工具时）
+miniapp/node_modules/
+miniapp/.DS_Store
+miniapp/.temp/
+miniapp/.ide/
+miniapp/.project.config.json
+
+# === Node.js 相关（小程序可能用到依赖）===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# === 不需要提交的项目内容 ===
 .cursorignore
 文档/
 恋心物语原型图/
-backend/.idea
+
+# === 其他备份或系统垃圾 ===
+*.bak
+*.tmp
+*.swp
+Thumbs.db
+ehthumbs.db
+desktop.ini
+.cursor
+

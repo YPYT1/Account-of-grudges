@@ -1,0 +1,292 @@
+/* 恋心物语 - 情侣绑定页面样式 */
+
+.couple-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #FFF9F5 0%, #FADADD 50%, #B2D9EA 100%);
+  padding: 40rpx;
+}
+
+/* 头部区域 */
+.header {
+  text-align: center;
+  margin-bottom: 60rpx;
+  position: relative;
+}
+
+.title {
+  font-size: 44rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 16rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #666666;
+  margin-bottom: 20rpx;
+}
+
+.help-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 24rpx;
+  color: #999999;
+  padding: 8rpx 16rpx;
+  border: 2rpx solid #E5E5E5;
+  border-radius: 20rpx;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* 标签页 */
+.tab-bar {
+  display: flex;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16rpx;
+  padding: 8rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx;
+  font-size: 28rpx;
+  color: #666666;
+  border-radius: 12rpx;
+  transition: all 0.3s ease;
+}
+
+.tab-item.active {
+  background: linear-gradient(135deg, #FADADD 0%, #B2D9EA 100%);
+  color: #333333;
+  font-weight: bold;
+}
+
+/* 内容区域 */
+.content {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 24rpx;
+  padding: 40rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.tab-content {
+  min-height: 400rpx;
+}
+
+/* 通用区域样式 */
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 12rpx;
+}
+
+.section-desc {
+  font-size: 26rpx;
+  color: #666666;
+  margin-bottom: 40rpx;
+  line-height: 1.5;
+}
+
+/* 创建邀请区域 */
+.create-section {
+  text-align: center;
+}
+
+.invite-code-display {
+  background: linear-gradient(135deg, #FFF3B0 0%, #FADADD 100%);
+  border-radius: 20rpx;
+  padding: 40rpx;
+  margin-bottom: 40rpx;
+}
+
+.code-label {
+  font-size: 24rpx;
+  color: #666666;
+  margin-bottom: 12rpx;
+}
+
+.code-value {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333333;
+  letter-spacing: 8rpx;
+  margin-bottom: 16rpx;
+  font-family: 'Courier New', monospace;
+}
+
+.code-expire {
+  font-size: 24rpx;
+  color: #999999;
+  margin-bottom: 30rpx;
+}
+
+.code-actions {
+  display: flex;
+  gap: 20rpx;
+  justify-content: center;
+}
+
+.action-btn {
+  flex: 1;
+  height: 72rpx;
+  border: none;
+  border-radius: 36rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.copy-btn {
+  background: rgba(255, 255, 255, 0.9);
+  color: #333333;
+  border: 2rpx solid #E5E5E5;
+}
+
+.share-btn {
+  background: linear-gradient(135deg, #B2D9EA 0%, #FADADD 100%);
+  color: #333333;
+}
+
+/* 生成区域 */
+.generate-section {
+  text-align: center;
+}
+
+.generate-tip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(250, 173, 221, 0.1);
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 40rpx;
+}
+
+.tip-icon {
+  font-size: 32rpx;
+  margin-right: 16rpx;
+}
+
+.tip-text {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.5;
+}
+
+/* 加入情侣区域 */
+.join-section {
+  text-align: center;
+}
+
+.input-section {
+  margin-bottom: 40rpx;
+}
+
+.input-label {
+  font-size: 28rpx;
+  color: #333333;
+  margin-bottom: 16rpx;
+  text-align: left;
+}
+
+.invite-input {
+  width: 100%;
+  height: 80rpx;
+  background: #F8F8F8;
+  border: 2rpx solid #E5E5E5;
+  border-radius: 16rpx;
+  padding: 0 24rpx;
+  font-size: 32rpx;
+  text-align: center;
+  letter-spacing: 4rpx;
+  font-family: 'Courier New', monospace;
+}
+
+.invite-input:focus {
+  border-color: #FADADD;
+  background: #FFFFFF;
+}
+
+.input-tip {
+  font-size: 24rpx;
+  color: #999999;
+  margin-top: 12rpx;
+  text-align: left;
+}
+
+/* 通用按钮 */
+.primary-btn {
+  width: 100%;
+  height: 88rpx;
+  background: linear-gradient(135deg, #FADADD 0%, #B2D9EA 100%);
+  border: none;
+  border-radius: 44rpx;
+  color: #333333;
+  font-size: 32rpx;
+  font-weight: bold;
+  box-shadow: 0 8rpx 24rpx rgba(250, 173, 221, 0.4);
+  transition: all 0.3s ease;
+}
+
+.primary-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 12rpx rgba(250, 173, 221, 0.3);
+}
+
+.primary-btn[disabled] {
+  opacity: 0.6;
+  transform: none;
+}
+
+/* 错误提示 */
+.error-tip {
+  display: flex;
+  align-items: center;
+  background: rgba(245, 34, 45, 0.1);
+  border: 2rpx solid rgba(245, 34, 45, 0.3);
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 40rpx;
+}
+
+.error-icon {
+  font-size: 32rpx;
+  margin-right: 16rpx;
+}
+
+.error-text {
+  color: #F5222D;
+  font-size: 28rpx;
+  flex: 1;
+}
+
+/* 底部说明 */
+.footer {
+  text-align: center;
+  padding: 40rpx 20rpx;
+}
+
+.footer-text {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.6;
+  margin-bottom: 30rpx;
+}
+
+.footer-features {
+  display: flex;
+  justify-content: center;
+  gap: 40rpx;
+}
+
+.feature {
+  font-size: 24rpx;
+  color: #999999;
+  padding: 12rpx 20rpx;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20rpx;
+}
