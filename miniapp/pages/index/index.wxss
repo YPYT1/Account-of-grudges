@@ -1,0 +1,413 @@
+.container {
+  padding: 16px 8px;
+  padding-bottom: 120rpx;
+  background-color: #FFF9F5;
+}
+
+/* 顶部情侣信息区域 */
+.couple-header {
+  padding: 32rpx 16rpx;
+  background: linear-gradient(135deg, #FADADD 0%, #F8BBD9 100%);
+  border-radius: 24rpx;
+  margin-bottom: 5px;
+}
+
+.couple-avatars {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.nickname {
+  font-size: 28rpx;
+  color: #fff;
+  font-weight: 500;
+}
+
+.love-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+  flex: 1;
+  margin: 0 40rpx;
+}
+
+.progress-value {
+  font-size: 36rpx;
+  color: #fff;
+  font-weight: bold;
+}
+
+.progress-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.progress-bar {
+  width: 120rpx;
+  height: 12rpx;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 6rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
+  border-radius: 6rpx;
+  transition: width 1s ease-in-out;
+  animation: progressAnimation 1s ease-in-out;
+}
+
+@keyframes progressAnimation {
+  from {
+    width: 0%;
+  }
+}
+
+/* 事件类型切换按钮 */
+.event-type-tabs {
+  display: flex;
+  margin-bottom: 5px;
+  gap: 5px;
+}
+
+.event-type-tab {
+  flex: 1;
+  padding: 24rpx;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 500;
+  border-radius: 24rpx;
+  background-color: #fff;
+  color: #666;
+  transition: all 0.3s ease;
+}
+
+.event-type-tab.active {
+  color: #333;
+  backdrop-filter: blur(20rpx);
+  background: rgba(255, 255, 255, 0.2);
+  border: 2rpx solid rgba(250, 218, 221, 0.3);
+}
+
+/* 事件列表 */
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.event-item {
+  background-color: #fff;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  box-shadow: 0 4rpx 20rpx rgba(250, 218, 221, 0.15);
+}
+
+.event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16rpx;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.author-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.event-date {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.mood-tag {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  background-color: #FFF9F5;
+  padding: 12rpx 20rpx;
+  border-radius: 20rpx;
+}
+
+.mood-emoji {
+  font-size: 28rpx;
+}
+
+.mood-name {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.event-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.event-description {
+  font-size: 30rpx;
+  line-height: 1.6;
+  color: #333;
+}
+
+.event-location {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.location-icon {
+  font-size: 24rpx;
+}
+
+.location-text {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 80rpx 32rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 悬浮添加按钮 */
+.fab-button {
+  position: fixed;
+  bottom: 120rpx;
+  right: 32rpx;
+  width: 120rpx;
+  height: 120rpx;
+  background: linear-gradient(135deg, #FADADD 0%, #F8BBD9 100%);
+  border-radius: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(250, 218, 221, 0.4);
+  z-index: 999;
+}
+
+.fab-icon {
+  font-size: 48rpx;
+  color: #fff;
+  font-weight: 300;
+}
+
+/* 模态框 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 24rpx;
+  width: 90%;
+  max-height: 80%;
+  overflow: hidden;
+  transform: translateY(50rpx);
+  transition: transform 0.3s ease;
+}
+
+.modal-overlay.show .modal-content {
+  transform: translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.modal-close {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  color: #999;
+  border-radius: 30rpx;
+  background-color: #f5f5f5;
+}
+
+/* 表单容器 */
+.form-container {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 16px 8px;
+}
+
+.form-section {
+  margin-bottom: 5px;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+/* 类型选择器 */
+.type-selector {
+  display: flex;
+  gap: 5px;
+}
+
+.type-option {
+  flex: 1;
+  padding: 24rpx;
+  text-align: center;
+  border-radius: 16rpx;
+  background-color: #f8f8f8;
+  color: #666;
+  font-size: 28rpx;
+  transition: all 0.3s ease;
+}
+
+.type-option.selected {
+  background-color: #FADADD;
+  color: #fff;
+}
+
+/* 描述输入框 */
+.description-input {
+  width: 100%;
+  min-height: 120rpx;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  background-color: #f8f8f8;
+  font-size: 28rpx;
+  line-height: 1.5;
+  border: none;
+}
+
+/* 心情标签 */
+.mood-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.mood-tag-item {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 16rpx 24rpx;
+  border-radius: 16rpx;
+  background-color: #f8f8f8;
+  border: 2rpx solid transparent;
+  transition: all 0.3s ease;
+}
+
+.mood-tag-item.selected {
+  background-color: #FADADD;
+  border-color: #FADADD;
+}
+
+.mood-tag-item.selected .tag-name {
+  color: #fff;
+}
+
+.tag-emoji {
+  font-size: 28rpx;
+}
+
+.tag-name {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 日期选择器 */
+.date-picker {
+  padding: 24rpx;
+  border-radius: 16rpx;
+  background-color: #f8f8f8;
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 地点输入框 */
+.location-input {
+  width: 100%;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  background-color: #f8f8f8;
+  font-size: 28rpx;
+  border: none;
+}
+
+/* 表单按钮 */
+.form-actions {
+  display: flex;
+  gap: 5px;
+  padding: 16px 8px;
+  background-color: #fff;
+}
+
+.action-button {
+  flex: 1;
+  padding: 28rpx;
+  text-align: center;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+.action-button.cancel {
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+.action-button.submit {
+  background-color: #FADADD;
+  color: #fff;
+} 

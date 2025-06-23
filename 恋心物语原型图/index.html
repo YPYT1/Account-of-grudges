@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>记仇小程序 - 首页</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body class="page-index">
+    <div class="app-container">
+        <header class="header">
+            <div class="header-left">
+                <img src="assets/icons/avatar-female.svg" class="avatar" alt="女方头像">
+            </div>
+            <div class="progress-container">
+                <div class="love-meter">
+                    <div class="love-label">爱情指数</div>
+                    <div id="love-progress" class="love-progress">
+                        <div class="progress-fill"></div>
+                        <div class="progress-text">75%</div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="assets/icons/avatar-male.svg" class="avatar" alt="男方头像">
+            </div>
+            <button type="button" class="add-button">+</button>
+        </header>
+
+        <main class="main-content">
+            <div id="grudge-list">
+                <!-- Grudge items will be dynamically inserted here -->
+            </div>
+            <div id="grudge-loader" class="loader-container hidden">
+                <div class="loader"></div>
+            </div>
+        </main>
+
+        <nav class="tab-bar">
+            <div class="tab-item" data-page="index">
+                <div class="tab-icon">📝</div>
+                <div class="tab-text">记仇</div>
+            </div>
+            <div class="tab-item" data-page="mood">
+                <div class="tab-icon">📊</div>
+                <div class="tab-text">心情</div>
+            </div>
+            <div class="tab-item" data-page="sweet">
+                <div class="tab-icon">💝</div>
+                <div class="tab-text">甜蜜</div>
+            </div>
+            <div class="tab-item" data-page="profile">
+                <div class="tab-icon">👤</div>
+                <div class="tab-text">我的</div>
+            </div>
+        </nav>
+    </div>
+
+    <script src="scripts/app.js"></script>
+</body>
+</html>

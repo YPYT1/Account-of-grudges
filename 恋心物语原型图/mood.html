@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>记仇小程序 - 心情分析</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body class="page-mood">
+    <div class="app-container">
+        <div class="main-content">
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">本周记录</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">😊</div>
+                    <div class="stat-label">主要心情</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3.2</div>
+                    <div class="stat-label">平均分数</div>
+                </div>
+            </div>
+
+            <div class="calendar-week card">
+                <!-- 一周日历将通过JavaScript生成 -->
+            </div>
+
+            <div class="segmented-control">
+                <button type="button" class="active" data-period="week">周分析</button>
+                <button type="button" data-period="month">月分析</button>
+            </div>
+
+            <div class="chart card" id="line-chart-card">
+                <h3 class="card-subtitle">情绪趋势图</h3>
+                <div class="chart-container">
+                    <canvas id="mood-chart"></canvas>
+                </div>
+            </div>
+
+            <div id="pie-chart-card" class="chart card">
+                <div class="chart-header">
+                    <h3 class="card-subtitle">情绪占比</h3>
+                    <div class="user-selector">
+                        <button type="button" class="user-btn active" data-user="我">女生</button>
+                        <button type="button" class="user-btn" data-user="对方">男生</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="mood-pie-chart"></canvas>
+                </div>
+            </div>
+
+            <nav class="tab-bar">
+                <div class="tab-item" data-page="index">
+                    <div class="tab-icon">📝</div>
+                    <div class="tab-text">记仇</div>
+                </div>
+                <div class="tab-item active" data-page="mood">
+                    <div class="tab-icon">📊</div>
+                    <div class="tab-text">心情</div>
+                </div>
+                <div class="tab-item" data-page="sweet">
+                    <div class="tab-icon">💝</div>
+                    <div class="tab-text">甜蜜</div>
+                </div>
+                <div class="tab-item" data-page="profile">
+                    <div class="tab-icon">👤</div>
+                    <div class="tab-text">我的</div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="scripts/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+page {
+  background-color: #FFF9F5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+
+/* 主题色覆盖 */
+:root {
+  --primary-color: #FADADD;
+  --info-color: #B2D9EA;
+  --success-color: #52C41A;
+  --warning-color: #FAAD14;
+  --error-color: #F5222D;
+}
+
+/* 全局容器样式 */
+.container {
+  padding: 16px 8px;
+  background-color: #FFF9F5;
+  min-height: 100vh;
+}
+
+/* 通用卡片阴影 */
+.card-shadow {
+  box-shadow: 0 4rpx 20rpx rgba(250, 218, 221, 0.15);
+  border-radius: 24rpx;
+}
+
+/* 渐变背景 */
+.gradient-bg {
+  background: linear-gradient(135deg, #FADADD 0%, #F8BBD9 100%);
+}
+
+/* 模糊背景 */
+.blur-bg {
+  backdrop-filter: blur(20rpx);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* 标准间距 */
+.spacing-vertical {
+  margin-bottom: 5px;
+}
+
+.spacing-horizontal {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+/* 页面标准内边距 */
+.page-padding {
+  padding: 16px 8px;
+}
+
+/* 内容块间距 */
+.content-gap {
+  gap: 5px;
+} 

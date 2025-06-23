@@ -1,0 +1,62 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/mood/mood",
+    "pages/sweet/sweet", 
+    "pages/profile/profile"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FADADD",
+    "navigationBarTitleText": "恋心物语",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#FFF9F5"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#FADADD",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "主页",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/mood/mood",
+        "text": "心情",
+        "iconPath": "assets/icons/mood.png",
+        "selectedIconPath": "assets/icons/mood-active.png"
+      },
+      {
+        "pagePath": "pages/sweet/sweet",
+        "text": "甜蜜",
+        "iconPath": "assets/icons/sweet.png",
+        "selectedIconPath": "assets/icons/sweet-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "assets/icons/profile.png",
+        "selectedIconPath": "assets/icons/profile-active.png"
+      }
+    ]
+  },
+  "usingComponents": {
+    "i-button": "/iview/button/index",
+    "i-card": "/iview/card/index",
+    "i-tag": "/iview/tag/index",
+    "i-progress": "/iview/progress/index",
+    "i-avatar": "/iview/avatar/index",
+    "i-icon": "/iview/icon/index",
+    "i-input": "/iview/input/index",
+    "i-panel": "/iview/panel/index",
+    "i-cell-group": "/iview/cell-group/index",
+    "i-cell": "/iview/cell/index",
+    "i-modal": "/iview/modal/index"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+} 

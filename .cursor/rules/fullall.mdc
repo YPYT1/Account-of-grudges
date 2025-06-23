@@ -1,0 +1,308 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+## **项目开发总纲：「恋心物语」原生微信小程序**
+
+### **第一部分：项目愿景与核心架构**
+
+#### **1.1 项目使命**
+
+您将要构建一个名为「恋心物语」的微信小程序。其核心使命是：**通过一个充满"手绘日系软萌"风格的交互界面，为情侣提供一个记录、分析、沟通并最终化解日常情感摩擦的私密空间，同时通过订阅制实现可持续运营。**
+
+#### **1.2 核心技术栈**
+
+*   **前端框架**: **原生微信小程序框架**
+    *   **开发语言**: TypeScript
+    *   **项目目录**: `/miniapp`
+    *   **运行环境**: 通过原生小程序开发，应用将自动适配微信内置的 WebView，在 iOS 和 Android 端表现一致。
+    *   **编译与测试**: 所有代码修改后，应使用微信开发者工具的"编译"功能进行测试，确保无编译错误和基本功能可用，而不是直接点击"预览"或"真机调试"进行最终测试。
+    *   **状态管理**: **mobx-miniprogram** - 提供响应式、可预测的全局状态管理方案。
+    *   **样式方案**: SCSS/Sass (所有样式、颜色、尺寸、圆角等均需通过 SCSS 变量在全局和组件级别进行统一管理)。
+*   **后端技术**: RESTful API (基于[Java 24 和 Maven 3.9.9][[memory:7432368268258542956]])
+*   **数据库**: PostgreSQL (根据 schema 设计推断)
+
+### **第二部分：前端 UI/UX 设计系统 (Design System)**
+
+**严格遵循** `项目界面介绍.md` 中定义的视觉规范，以确保品牌一致性。所有组件均需作为原生自定义组件实现。
+
+#### **2.1 视觉基调**
+
+*   **主题**: 「⼿绘日系软萌」— 低饱和度粉蓝对比 + 奶油底色，线条图标、圆润阴影。
+*   **色系**:
+    *   **樱花粉 (主色)**: `#FADADD`
+    *   **天空蓝 (对比色)**: `#B2D9EA`
+    *   **柠檬黄 (点缀色)**: `#FFF3B0`
+    *   **奶油底 (背景色)**: `#FFF9F5`
+    *   **标准文本色**: `#333333`
+*   **字体**: **思源黑体 / 阿里巴巴普惠体**，常规正文 `14px`。
+*   **栅格系统**:
+    *   **页面左右安全边距**: `16px`
+    *   **同级垂直间距**: `12px` / `24px`
+
+#### **2.2 全局组件库规范**
+
+| 组件          | 关键样式                                                     | 交互/状态                           |
+| :--- | :----- | :---- |
+| **Tab Bar**   | 在 `app.json` 中配置，高 `56px`；选中项颜色为 `#FADADD`；图标 `24px`；文字 `12px` | `bindtap="onTabSwitch"` (自定义时)             |
+| **主按钮**      | 宽 `320px` × 高 `48px`；圆角 `24px`；主色渐变；文字 `16px`     | `hover-class="btn--tap"`            |
+| **次按钮**      | 宽 `80px` × 高 `40px`；`1px` 主色边框；透明背景              | `...`                               |
+| **卡片 (`Card`)** | 全宽减 `32px`；圆角 `16px`；阴影 `0 2px 6px rgba(0,0,0,.04)`；内边距 `16px` | hover 背景色加深 3% (`hover-class`)                 |
+| **标签 (`Tag`)**  | 圆角 `8px`；内边距 `4px × 10px`；粉/蓝 `10%` 透明度背景      | 选中时描边 `1px` 主色               |
+| **心情 SVG**    | 直径 `24px`；默认灰度 `50%`；选中时填充粉/蓝                 | `animation: pulse` (使用 `wx.createAnimation`)                  |
+| **心形进度条**  | 高 `12px`；轨道淡灰；填充主色渐变；中间心形图标 `32px` 跟随百分比 | 自定义组件，`properties: { value: Number }`               |
+| **动效**        | ➕按钮 `tap` 缩放 `0.9→1`；进度条 `transition: width 0.4s ease`；Tab 切换自定义动效；卡片进入 `translateY(10px) + fade` |                                     |
+
+### **第三部分：后端 API 完整规格**
+
+#### **3.1 全局约定**
+
+*   **基地址 (Base URL)**: `/api`
+*   **认证 (Authentication)**: 除登录/注册外，所有请求必须在 HTTP 头中携带 `Authorization: Bearer <YOUR_JWT_TOKEN>`。
+*   **通用响应结构**:
+    ```json
+    {
+      "code": 200,          // number: 业务状态码
+      "message": "Success", // string: 响应文本描述
+      "data": { ... }       // object | array | null: 核心数据
+    }
+    ```
+*   **通用业务状态码**:
+
+| Code  | HTTP状态         | 含义           | 前端处理建议                                           |
+| :---- | :--- | :---- | :----- |
+| `200` | 200 OK           | **请求成功**     | 通用成功状态。                                         |
+| `201` | 201 Created      | **创建成功**     | POST 创建新资源成功。                                  |
+| `400` | 400 Bad Request  | **请求参数错误** | 提示用户修改输入。                                     |
+| `401` | 401 Unauthorized | **需要认证**     | **必须拦截**，清除本地 Token，重定向到登录页。             |
+| `403` | 403 Forbidden    | **权限不足**     | 提示"无权操作"。                                       |
+| `404` | 404 Not Found    | **资源不存在**   | 显示"内容不存在"或"已被删除"。                         |
+| `500` | 500 Server Error | **服务器内部错误** | 显示友好的"服务开小差了，请稍后再试"提示。               |
+
+#### **3.2 API 端点详述 (Endpoint Definitions)**
+
+<details>
+<summary><b>第一部分：用户、认证与会员系统 API (点击展开)</b></summary>
+
+**1. 用户会话 (Session)**
+
+*   `GET /me` - **获取当前会话信息**
+    *   **描述**: 应用启动后必须调用的第一个接口，获取用户、伴侣、情侣关系及访问权限。
+    *   **认证**: `必须`
+    *   **成功响应 (200 OK)**:
+        ```json
+        {
+          "access_status": "TRIAL", // ADMIN | FULL_ACCESS | TRIAL | EXPIRED | UNBOUND
+          "currentUser": { ... },   // user object
+          "partner": { ... },       // user object
+          "coupleInfo": { ... }     // couple object
+        }
+        ```
+
+**2. 情侣关系 (Couples)**
+
+*   `POST /couples/invitations` - **创建绑定邀请**
+    *   **描述**: 为当前用户生成一个唯一的、有时效性的邀请码。
+    *   **认证**: `必须`
+    *   **成功响应 (200 OK)**:
+        ```json
+        {
+          "invite_code": "A8C3F9",
+          "expires_at": "2023-10-28T14:55:00Z"
+        }
+        ```
+
+*   `POST /couples/accept-invitation` - **接受绑定邀请**
+    *   **描述**: 输入邀请码，完成情侣绑定。
+    *   **认证**: `必须`
+    *   **请求体**: `{ "invite_code": "A8C3F9" }`
+    *   **成功响应 (200 OK)**: 返回与 `GET /me` 格式相同的完整会话对象。
+
+*   `POST /couples/unbind` - **解绑情侣关系**
+    *   **描述**: 确认解绑当前情侣关系。
+    *   **认证**: `必须`
+    *   **成功响应 (200 OK)**: 返回 `access_status` 为 `UNBOUND` 的全新会话对象。
+
+**3. 订阅与支付 (Subscriptions)**
+
+*   `GET /subscriptions/plans` - **获取可订阅的套餐**
+    *   **描述**: 获取所有当前上架的可供购买的会员套餐列表。
+    *   **认证**: `必须`
+    *   **成功响应 (200 OK)**: 返回套餐对象数组。
+
+*   `POST /subscriptions` - **创建订阅订单**
+    *   **描述**: 用户选择套餐创建待支付订单，返回调起支付所需信息。
+    *   **认证**: `必须`
+    *   **请求体**: `{ "plan_id": "plan_yearly_249", "promo_code": "SWEETLOVE25" }`
+    *   **成功响应 (200 OK)**: 返回订单信息和 `payment_gateway_payload`。
+</details>
+
+<details>
+<summary><b>第二部分：核心内容与交互 API (点击展开)</b></summary>
+
+**4. 帖子/事件 (Events)**
+
+*   `GET /events` - **获取帖子列表**
+    *   **Query 参数**: `status` (string, `必须`): `unresolved` 或 `resolved`。
+    *   **认证**: `必须`
+    *   **成功响应 (200 OK)**: 返回帖子对象数组。
+
+*   `POST /events` - **新建帖子**
+    *   **认证**: `必须`
+    *   **请求体**:
+        ```json
+        {
+          "type": "brainstorming", // 'brainstorming' 或 'sweet_moment'
+          "description": "又玩游戏到半夜一点才睡！",
+          "event_date": "2023-10-28",
+          "mood_tag_id": 1,
+          "images": [],
+          "location_text": "卧室"
+        }
+        ```
+    *   **成功响应 (201 Created)**: 返回完整的新建帖子对象。
+
+*   `GET /events/{eventId}` - **获取单个帖子详情**
+    *   **认证**: `必须`
+    *   **成功响应 (200 OK)**: 返回单个帖子对象。
+
+*   `PUT /events/{eventId}` - **更新帖子**
+    *   **描述**: 主要用于"解决"一个帖子。
+    *   **认证**: `必须`
+    *   **请求体**: `{ "solution": "沟通好了...", "status": "resolved" }`
+    *   **成功响应 (200 OK)**: 返回被完整更新后的帖子对象。
+
+*   `DELETE /events/{eventId}` - **删除帖子**
+    *   **认证**: `必须`
+    *   **成功响应 (200 OK)**: `{ "deleted_event_id": "..." }`
+
+**5. 情绪标签 (Mood Tags)**
+
+*   `GET /mood-tags` - **获取所有可用的情绪标签**
+    *   **认证**: `必须`
+    *   **成功响应 (200 OK)**: 返回情绪标签对象数组。
+
+**6. 甜蜜留言 (Sweet Messages)**
+
+*   `GET /sweet-messages` - **获取甜蜜留言板列表**
+    *   **认证**: `必须`
+    *   **成功响应 (200 OK)**: 返回甜蜜留言对象数组。
+
+*   `POST /sweet-messages` - **新建甜蜜留言**
+    *   **认证**: `必须`
+    *   **请求体**: `{ "message": "今天也是超爱你的一天！", "nickname": "你的小太阳" }`
+    *   **成功响应 (201 Created)**: 返回完整的新建留言对象。
+</details>
+
+<details>
+<summary><b>第三部分：系统与辅助 API (点击展开)</b></summary>
+
+**7. 个人资料 (Profile)**
+
+*   `PUT /me` - **更新用户个人资料**
+    *   **认证**: `必须`
+    *   **请求体**: `{ "nickname": "新昵称", "bio": "新简介" }`
+    *   **成功响应 (200 OK)**: 返回仅含更新后 `currentUser` 的对象。
+
+**8. 通知中心 (Notifications)**
+
+*   `GET /notifications` - **获取通知中心列表**
+    *   **认证**: `必须`
+    *   **成功响应 (200 OK)**: 返回通知列表及未读计数。
+
+</details>
+
+### **第四部分：数据库 Schema (PostgreSQL)**
+
+这是系统的数据基石，前端可据此定义完整的 TypeScript Interfaces。
+
+<details>
+<summary><b>核心表 (用户、情侣、订阅) (点击展开)</b></summary>
+
+*   **`users` (用户表)**
+| 字段名 | 类型 | 约束/默认值 | 描述 |
+| :--- | :--- | :--- | :--- |
+| `id` | `UUID` | `PRIMARY KEY` | 用户的唯一ID |
+| `openid` | `VARCHAR(255)` | `UNIQUE, NOT NULL` | 微信OpenID |
+| `couple_id` | `UUID` | `FOREIGN KEY` -> `couples(id)` | 当前所属情侣关系的ID |
+| `status` | `VARCHAR(50)` | `'active'` | `active`, `suspended`, `deleted` |
+
+*   **`couples` (情侣关系表)**
+| 字段名 | 类型 | 约束/默认值 | 描述 |
+| :--- | :--- | :--- | :--- |
+| `id` | `UUID` | `PRIMARY KEY` | 情侣关系的唯一ID |
+| `trial_ends_at` | `TIMESTAMPTZ` | `NULL` | 免费试用期结束时间 |
+| `subscription_expires_at` | `TIMESTAMPTZ` | `NULL` | 付费订阅到期时间 |
+| `status` | `VARCHAR(50)` | `'active'` | `active`, `unbound` |
+
+*   **`subscriptions` (订阅订单表)**
+| 字段名 | 类型 | 约束/默认值 | 描述 |
+| :--- | :--- | :--- | :--- |
+| `id` | `UUID` | `PRIMARY KEY` | 订单的唯一ID |
+| `couple_id` | `UUID` | `FOREIGN KEY` -> `couples(id)` | 关联的情侣关系ID |
+| `payer_user_id` | `UUID` | `FOREIGN KEY` -> `users(id)` | 支付方的用户ID |
+| `status` | `VARCHAR(50)` | `'completed'` | `pending`, `completed`, `failed`, `refunded` |
+
+</details>
+
+<details>
+<summary><b>内容表 (事件、留言、标签) (点击展开)</b></summary>
+
+*   **`events` (核心事件表)**
+| 字段名 | 类型 | 约束/默认值 | 描述 |
+| :--- | :--- | :--- | :--- |
+| `id` | `UUID` | `PRIMARY KEY` | 事件的唯一ID |
+| `couple_id` | `UUID` | `FOREIGN KEY` -> `couples(id)` | 所属情侣关系ID |
+| `author_id` | `UUID` | `FOREIGN KEY` -> `users(id)` | 创建者的用户ID |
+| `type` | `VARCHAR(50)` | `NOT NULL` | `brainstorming`, `sweet_moment` |
+| `description` | `TEXT` | `NOT NULL` | 详细文字描述 |
+| `mood_tag_id` | `INT` | `FOREIGN KEY` -> `mood_tags(id)` | 关联的情绪标签ID |
+| `images` | `TEXT[]` | `DEFAULT '{}'` | 附带的图片URL列表 |
+| `status` | `VARCHAR(50)` | `'unresolved'` | `unresolved`, `resolved`, `deleted` |
+
+*   **`mood_tags` (情绪标签表)**
+| 字段名 | 类型 | 约束/默认值 | 描述 |
+| :--- | :--- | :--- | :--- |
+| `id` | `SERIAL` | `PRIMARY KEY` | 标签的唯一ID |
+| `name` | `VARCHAR(100)` | `UNIQUE` | 标签名称 (如"生气") |
+| `category` | `VARCHAR(50)` | `NOT NULL` | `positive`, `negative`, `neutral` |
+
+*   **`sweet_messages` (甜蜜留言表)**
+| 字段名 | 类型 | 约束/默认值 | 描述 |
+| :--- | :--- | :--- | :--- |
+| `id` | `UUID` | `PRIMARY KEY` | 留言的唯一ID |
+| `couple_id` | `UUID` | `FOREIGN KEY` -> `couples(id)` | 所属情侣关系ID |
+| `author_id` | `UUID` | `FOREIGN KEY` -> `users(id)` | 创建者的用户ID |
+| `message` | `TEXT` | `NOT NULL` | 留言的具体内容 |
+
+</details>
+
+### **第五部分：开发路线图与优先级 (Roadmap)**
+
+1.  **Phase 1: 项目初始化与核心认证 (1-2周)**
+    *   [ ] 搭建原生小程序 + TS + SCSS 项目骨架，配置 `tsconfig.json` 和 `project.config.json`。
+    *   [ ] 在 `services/api.js` 中封装 `wx.request`，统一处理 BaseURL、`Authorization` Header 和 `401` 响应。
+    *   [ ] 创建全局状态管理 (mobx-miniprogram)，在 `store/user.js` 中定义用户会话信息，并在 `app.js` 中注入。
+    *   [ ] **完成页面**: 登录页 (`/pages/auth/index`)、情侣绑定/邀请页 (`/pages/couple/index`)。
+    *   [ ] **完成功能**: 完整的登录、情侣绑定与解绑流程。
+
+2.  **Phase 2: 核心内容 CRUD (2-3周)**
+    *   [ ] 创建可复用的原生自定义组件: `Card`, `Button`, `Tag`, `MoodPicker`。
+    *   [ ] **完成页面**: 首页事件列表 (`/pages/index/index`)，新增/编辑事件页 (`/pages/events/detail`)。
+    *   [ ] **完成功能**: 事件的增、删、改、查，以及列表的无限滚动加载 (使用 `onReachBottom` 生命周期)。
+
+3.  **Phase 3: 扩展功能与数据可视化 (2周)**
+    *   [ ] 引入 `echarts-for-weixin` 图表库，并封装成自定义组件。
+    *   [ ] **完成页面**: 心情分析页 (`/pages/mood/index`)，甜蜜留言板页 (`/pages/sweet/index`)。
+    *   [ ] **完成功能**: 心情数据图表展示、甜蜜留言墙展示与发布。
+
+4.  **Phase 4: 商业化与个人中心 (1-2周)**
+    *   [ ] **完成页面**: 个人中心页 (`/pages/profile/index`)。
+    *   [ ] **完成功能**: 展示试用/付费状态，对接 `GET /subscriptions/plans` 和 `POST /subscriptions` 实现购买流程 (调用 `wx.requestPayment`)，更新个人资料。
+
+5.  **Phase 5: 优化与测试 (1周)**
+    *   [ ] 完善所有页面的空状态、加载状态 (骨架屏) 和错误状态。
+    *   [ ] 添加必要的 `wx.createAnimation` 动效，提升用户体验。
+    *   [ ] 在不同尺寸的 iOS 和 Android 设备上进行兼容性测试和性能调优。
+</rewritten_file>

@@ -1,0 +1,182 @@
+<view class="container">
+  <!-- 顶部情侣信息区域 -->
+  <view class="couple-header">
+    <view class="couple-avatars">
+      <view class="avatar-container left">
+        <i-avatar 
+          src="{{userInfo.currentUser.avatar_url}}" 
+          size="large" 
+          shape="circle"
+        />
+        <text class="nickname">{{userInfo.currentUser.nickname}}</text>
+      </view>
+      
+      <view class="love-progress">
+        <text class="progress-value">{{loveProgress}}%</text>
+        <view class="progress-container">
+          <view class="progress-bar">
+            <view class="progress-fill" style="width: {{loveProgress}}%"></view>
+          </view>
+        </view>
+      </view>
+      
+      <view class="avatar-container right">
+        <i-avatar 
+          src="{{userInfo.partner.avatar_url}}" 
+          size="large" 
+          shape="circle"
+        />
+        <text class="nickname">{{userInfo.partner.nickname}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 事件类型切换按钮 -->
+  <view class="event-type-tabs">
+    <view 
+      class="event-type-tab {{currentEventType === 'sweet_moment' ? 'active' : ''}}" 
+      data-type="sweet_moment" 
+      bindtap="onEventTypeChange"
+    >
+      甜蜜时刻
+    </view>
+    <view 
+      class="event-type-tab {{currentEventType === 'brainstorming' ? 'active' : ''}}" 
+      data-type="brainstorming" 
+      bindtap="onEventTypeChange"
+    >
+      风暴时刻
+    </view>
+  </view>
+
+  <!-- 事件列表 -->
+  <view class="event-list">
+    <view 
+      class="event-item card-shadow" 
+      wx:for="{{eventList}}" 
+      wx:key="id"
+    >
+      <view class="event-header">
+        <view class="author-info">
+          <text class="author-name">{{item.author.nickname}}</text>
+          <text class="event-date">{{item.event_date}}</text>
+        </view>
+        <view class="mood-tag">
+          <text class="mood-emoji">{{item.mood_tag.emoji}}</text>
+          <text class="mood-name">{{item.mood_tag.name}}</text>
+        </view>
+      </view>
+      
+      <view class="event-content">
+        <text class="event-description">{{item.description}}</text>
+        <view class="event-location" wx:if="{{item.location_text}}">
+          <text class="location-icon">📍</text>
+          <text class="location-text">{{item.location_text}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{eventList.length === 0}}">
+      <text class="empty-text">还没有记录，点击下方按钮开始记录吧～</text>
+    </view>
+  </view>
+
+  <!-- 悬浮添加按钮 -->
+  <view class="fab-button" bindtap="showAddForm">
+    <text class="fab-icon">+</text>
+  </view>
+
+  <!-- 添加表单弹窗 -->
+  <view class="modal-overlay {{showAddForm ? 'show' : ''}}" bindtap="hideAddForm">
+    <view class="modal-content" catchtap="preventDefault">
+      <view class="modal-header">
+        <text class="modal-title">添加新记录</text>
+        <view class="modal-close" bindtap="hideAddForm">×</view>
+      </view>
+      
+      <view class="form-container">
+        <!-- 事件类型选择 -->
+        <view class="form-section">
+          <view class="section-title">事件类型</view>
+          <view class="type-selector">
+            <view 
+              class="type-option {{formData.type === 'sweet_moment' ? 'selected' : ''}}"
+              data-type="sweet_moment"
+              bindtap="onEventTypeChange"
+            >
+              💕 甜蜜时刻
+            </view>
+            <view 
+              class="type-option {{formData.type === 'brainstorming' ? 'selected' : ''}}"
+              data-type="brainstorming"
+              bindtap="onEventTypeChange"
+            >
+              🧠 风暴时刻
+            </view>
+          </view>
+        </view>
+
+        <!-- 事件描述 -->
+        <view class="form-section">
+          <view class="section-title">事件描述</view>
+          <textarea 
+            class="description-input" 
+            placeholder="描述一下发生了什么..."
+            value="{{formData.description}}"
+            bindinput="onDescriptionInput"
+            maxlength="200"
+          ></textarea>
+        </view>
+
+        <!-- 心情选择 -->
+        <view class="form-section">
+          <view class="section-title">选择心情</view>
+          <view class="mood-tags">
+            <view 
+              class="mood-tag-item {{formData.mood_tag_id === item.id ? 'selected' : ''}}"
+              wx:for="{{moodTags}}" 
+              wx:key="id"
+              data-id="{{item.id}}"
+              bindtap="onMoodTagSelect"
+            >
+              <text class="tag-emoji">{{item.emoji}}</text>
+              <text class="tag-name">{{item.name}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 日期选择 -->
+        <view class="form-section">
+          <view class="section-title">发生日期</view>
+          <picker 
+            mode="date" 
+            value="{{formData.event_date}}" 
+            bindchange="onDateChange"
+          >
+            <view class="date-picker">
+              {{formData.event_date || '选择日期'}}
+            </view>
+          </picker>
+        </view>
+
+        <!-- 地点输入 -->
+        <view class="form-section">
+          <view class="section-title">地点（可选）</view>
+          <input 
+            class="location-input" 
+            placeholder="在哪里发生的呢？"
+            value="{{formData.location_text}}"
+            bindinput="onLocationInput"
+          />
+        </view>
+      </view>
+
+      <!-- 表单按钮 -->
+      <view class="form-actions">
+        <view class="action-button cancel" bindtap="hideAddForm">取消</view>
+        <view class="action-button submit" bindtap="onSubmitForm">提交</view>
+      </view>
+    </view>
+  </view>
+</view> 
