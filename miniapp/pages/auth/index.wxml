@@ -1,0 +1,104 @@
+<!-- 恋心物语 - 登录认证页面 -->
+<view class="auth-container">
+  
+  <!-- 背景装饰 -->
+  <view class="bg-decoration">
+    <view class="heart heart-1">💕</view>
+    <view class="heart heart-2">💖</view>
+    <view class="heart heart-3">💝</view>
+  </view>
+
+  <!-- 主要内容 -->
+  <view class="auth-content">
+    
+    <!-- Logo 和标题 -->
+    <view class="logo-section">
+      <view class="logo">
+        <image src="/assets/icons/logo.png" class="logo-image" mode="aspectFit"></image>
+      </view>
+      <view class="title">恋心物语</view>
+      <view class="subtitle">记录爱情的每一个瞬间</view>
+    </view>
+
+    <!-- 登录区域 -->
+    <view class="login-section">
+      
+      <!-- 错误提示 -->
+      <view wx:if="{{error}}" class="error-tip">
+        <view class="error-text">{{error}}</view>
+        <view class="retry-btn" bind:tap="retryLogin">重试</view>
+      </view>
+
+      <!-- 登录按钮 -->
+      <view class="login-buttons">
+        <button 
+          wx:if="{{!isLoggedIn}}"
+          class="login-btn primary-btn"
+          loading="{{userLoading || isLoading}}"
+          disabled="{{userLoading || isLoading}}"
+          open-type="getUserProfile"
+          bind:getuserprofile="handleGetUserProfile"
+        >
+          <view class="btn-content">
+            <view class="btn-icon">🌸</view>
+            <view class="btn-text">微信授权登录</view>
+          </view>
+        </button>
+
+        <!-- 已登录状态 -->
+        <view wx:else class="logged-in-tip">
+          <view class="success-icon">✅</view>
+          <view class="success-text">登录成功，正在跳转...</view>
+        </view>
+      </view>
+
+      <!-- 功能介绍 -->
+      <view class="features">
+        <view class="feature-item">
+          <view class="feature-icon">📝</view>
+          <view class="feature-text">记录日常小摩擦</view>
+        </view>
+        <view class="feature-item">
+          <view class="feature-icon">💕</view>
+          <view class="feature-text">分享甜蜜时刻</view>
+        </view>
+        <view class="feature-item">
+          <view class="feature-icon">📊</view>
+          <view class="feature-text">分析情感趋势</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部链接 -->
+    <view class="footer-links">
+      <view class="link-item" bind:tap="viewPrivacyPolicy">隐私政策</view>
+      <view class="link-divider">|</view>
+      <view class="link-item" bind:tap="viewUserAgreement">用户协议</view>
+      <view class="link-divider">|</view>
+      <view class="link-item" bind:tap="contactService">联系客服</view>
+    </view>
+  </view>
+
+  <!-- 隐私政策弹窗 -->
+  <i-modal 
+    visible="{{showPrivacyModal}}" 
+    title="隐私政策确认"
+    bind:ok="agreeToPrivacy"
+    bind:cancel="rejectPrivacy"
+    ok-text="同意"
+    cancel-text="拒绝"
+  >
+    <view class="privacy-content">
+      <view class="privacy-text">
+        为了给您提供更好的服务，我们需要获取您的基本信息（头像、昵称）。
+      </view>
+      <view class="privacy-text">
+        我们承诺严格保护您的隐私，不会泄露给第三方。
+      </view>
+      <view class="privacy-link" bind:tap="viewPrivacyPolicy">
+        查看完整隐私政策 →
+      </view>
+    </view>
+  </i-modal>
+
+</view>

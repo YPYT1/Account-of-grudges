@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "登录",
+  "navigationBarBackgroundColor": "#FADADD",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#FFF9F5",
+  "usingComponents": {
+    "i-modal": "/iview/modal/index"
+  }
+}

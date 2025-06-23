@@ -1,0 +1,264 @@
+/* 恋心物语 - 登录认证页面样式 */
+
+.auth-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #FFF9F5 0%, #FADADD 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 背景装饰 */
+.bg-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.heart {
+  position: absolute;
+  font-size: 40rpx;
+  opacity: 0.1;
+  animation: float 6s ease-in-out infinite;
+}
+
+.heart-1 {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.heart-2 {
+  top: 60%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+.heart-3 {
+  bottom: 30%;
+  left: 20%;
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+/* 主要内容 */
+.auth-content {
+  position: relative;
+  z-index: 1;
+  padding: 120rpx 60rpx 60rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Logo 区域 */
+.logo-section {
+  text-align: center;
+  margin-bottom: 120rpx;
+}
+
+.logo {
+  width: 160rpx;
+  height: 160rpx;
+  margin: 0 auto 40rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 32rpx rgba(250, 173, 221, 0.3);
+}
+
+.logo-image {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 16rpx;
+  letter-spacing: 2rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #666666;
+  opacity: 0.8;
+}
+
+/* 登录区域 */
+.login-section {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 错误提示 */
+.error-tip {
+  width: 100%;
+  background: rgba(245, 34, 45, 0.1);
+  border: 2rpx solid rgba(245, 34, 45, 0.3);
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.error-text {
+  color: #F5222D;
+  font-size: 28rpx;
+  flex: 1;
+}
+
+.retry-btn {
+  color: #F5222D;
+  font-size: 28rpx;
+  padding: 8rpx 16rpx;
+  border: 2rpx solid #F5222D;
+  border-radius: 8rpx;
+  background: rgba(245, 34, 45, 0.1);
+}
+
+/* 登录按钮 */
+.login-buttons {
+  width: 100%;
+  margin-bottom: 80rpx;
+}
+
+.login-btn {
+  width: 100%;
+  height: 96rpx;
+  background: linear-gradient(135deg, #FADADD 0%, #B2D9EA 100%);
+  border: none;
+  border-radius: 48rpx;
+  color: #333333;
+  font-size: 32rpx;
+  font-weight: bold;
+  box-shadow: 0 8rpx 24rpx rgba(250, 173, 221, 0.4);
+  transition: all 0.3s ease;
+}
+
+.login-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 12rpx rgba(250, 173, 221, 0.3);
+}
+
+.login-btn[disabled] {
+  opacity: 0.6;
+  transform: none;
+}
+
+.btn-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon {
+  font-size: 36rpx;
+  margin-right: 16rpx;
+}
+
+.btn-text {
+  font-size: 32rpx;
+}
+
+/* 已登录状态 */
+.logged-in-tip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx;
+  background: rgba(82, 196, 26, 0.1);
+  border-radius: 16rpx;
+  width: 100%;
+}
+
+.success-icon {
+  font-size: 36rpx;
+  margin-right: 16rpx;
+}
+
+.success-text {
+  color: #52C41A;
+  font-size: 28rpx;
+}
+
+/* 功能介绍 */
+.features {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 60rpx;
+}
+
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.feature-icon {
+  font-size: 48rpx;
+  margin-bottom: 16rpx;
+}
+
+.feature-text {
+  font-size: 24rpx;
+  color: #666666;
+  text-align: center;
+}
+
+/* 底部链接 */
+.footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  padding-top: 40rpx;
+}
+
+.link-item {
+  font-size: 24rpx;
+  color: #999999;
+  padding: 8rpx 16rpx;
+}
+
+.link-divider {
+  font-size: 24rpx;
+  color: #CCCCCC;
+}
+
+/* 隐私政策弹窗 */
+.privacy-content {
+  padding: 20rpx 0;
+}
+
+.privacy-text {
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 1.6;
+  margin-bottom: 20rpx;
+}
+
+.privacy-link {
+  font-size: 28rpx;
+  color: #FADADD;
+  text-align: center;
+  padding: 16rpx;
+  margin-top: 20rpx;
+}
